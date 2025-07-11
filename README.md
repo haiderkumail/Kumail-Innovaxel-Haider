@@ -100,6 +100,9 @@ dev — Contains the complete working application
 ✅ At least 15 meaningful commits with clear messages
 
 🙌 Author
+
 Name: Kumail Haider
+
 Email: hkumail245@gmail.com
+
 Repository: kumail-innovaxel-haider
