@@ -89,16 +89,6 @@ PUT	/shorten/:shortCode	Update existing short URL
 DELETE	/shorten/:shortCode	Delete short URL
 GET	/shorten/:shortCode/stats	Get access statistics
 
-✔️ Branching
-main — Only contains this README.md
-
-dev — Contains the complete working application
-
-📣 Submission
-✅ main → README only
-✅ dev → Complete code
-✅ At least 15 meaningful commits with clear messages
-
 🙌 Author
 
 Name: Kumail Haider
