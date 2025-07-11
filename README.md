@@ -39,16 +39,23 @@ A simple **RESTful API** and minimal **frontend** to shorten long URLs, retrieve
 ## 🏃‍♂️ **Getting Started**
 
 1️⃣ Clone the Repository
+
 git clone -b dev  https://github.com/haiderkumail/Kumail-Innovaxel-Haider.git
 cd Kumail-Innovaxel-Haider
+
 2️⃣ Install Dependencies
+
 npm install
+
 3️⃣ Configure Environment
+
 Create a .env file in the project root:
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
 PORT=5000
 ✅ Replace with your MongoDB Atlas connection string.
+
 4️⃣ Run the Application
+
 node server.js
 The server will start at:
 👉 http://localhost:5000
