@@ -1,0 +1,29 @@
+<!-- public/redirect.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p>Redirecting...</p>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+
+      if (code) {
+        const response = await fetch(`/shorten/${code}`);
+        if (response.ok) {
+          const data = await response.json();
+          window.location.href = data.url;
+        } else {
+          document.body.innerHTML = '<h2>Invalid short code.</h2>';
+        }
+      } else {
+        document.body.innerHTML = '<h2>No code provided.</h2>';
+      }
+    })();
+  </script>
+</body>
+</html>

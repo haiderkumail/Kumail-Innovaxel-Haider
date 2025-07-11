@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+
+        input,
+        button {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            width: 300px;
+        }
+
+        button {
+            width: 150px;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🌐 URL Shortener</h1>
+
+    <div class="section">
+        <h3>Create Short URL</h3>
+        <input id="createUrl" placeholder="Long URL" /><br />
+        <button onclick="createShortUrl()">Shorten</button>
+        <p id="createResult"></p>
+    </div>
+
+    <div class="section">
+        <h3>Update Short URL</h3>
+        <input id="updateCode" placeholder="Short Code (abc123)" /><br />
+        <input id="updateUrl" placeholder="New Long URL" /><br />
+        <button onclick="updateShortUrl()">Update</button>
+        <p id="updateResult"></p>
+    </div>
+
+    <div class="section">
+        <h3>Get Stats</h3>
+        <input id="statsCode" placeholder="Short Code (abc123)" /><br />
+        <button onclick="getStats()">Get Stats</button>
+        <pre id="statsResult"></pre>
+    </div>
+
+    <script>
+        async function createShortUrl() {
+            const longUrl = document.getElementById('createUrl').value;
+            const response = await fetch('/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: longUrl })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const link = `${window.location.origin}/redirect.html?code=${data.shortCode}`;
+                document.getElementById('createResult').innerHTML =
+                    `✅ Short link: <a href="${link}" target="_blank">${link}</a>`;
+            } else {
+                document.getElementById('createResult').innerText = '❌ Failed to shorten.';
+            }
+        }
+
+        async function updateShortUrl() {
+            const code = document.getElementById('updateCode').value.trim();
+            const newUrl = document.getElementById('updateUrl').value.trim();
+
+            const response = await fetch(`/shorten/${code}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: newUrl })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const link = `<a href="${data.url}" target="_blank">${data.url}</a>`;
+                document.getElementById('updateResult').innerHTML = `✅ Updated to: ${link}`;
+            } else {
+                document.getElementById('updateResult').innerText = '❌ Failed to update.';
+            }
+        }
+
+
+        async function getStats() {
+            const code = document.getElementById('statsCode').value.trim();
+
+            const response = await fetch(`/shorten/${code}/stats`);
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('statsResult').innerText = JSON.stringify(data, null, 2);
+            } else {
+                document.getElementById('statsResult').innerText = '❌ Not found.';
+            }
+        }
+    </script>
+</body>
+
+</html>
